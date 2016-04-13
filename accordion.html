@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>图片之手风琴效果</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- <link rel="stylesheet" type="text/css" href="Css/reset.css"> -->
+    <style type="text/css">
+		body,ul,li,p{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none;
+		}
+		/*去掉ul前面的小点，否则右面的虚线对不齐*/
+		.wrapper{
+			height: 128px;
+			width: 938px;
+			border: 1px solid #d3d3d3;
+			margin: auto;
+			padding: 0;
+		}
+		.wrapper li{
+			width: 156px;
+			height: 128px;
+			float: left;
+			overflow: hidden;
+		}
+		.wrapper li a{
+			width: 156px;
+			height: 128px;
+			display: block;
+			position: relative;
+			overflow: hidden;
+			text-decoration: none；
+		}
+		.wrapper img{
+			position: absolute;
+			bottom: 0;
+			right: -15px;
+			/*让图片的右边超出列表，当鼠标悬浮时完全显示*/
+			height: 72px;
+			width: 117px;
+		}
+		.wrapper .info{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 136px;
+			padding: 4px 10px;
+		}
+		.wrapper .info h3{
+			font-size: 14px;
+			font-weight: 700;
+			margin: auto;
+			padding: 0;
+		}
+		.wrapper .info p{
+			color: #868686;
+			font-size: 12px;
+			height: 22px;
+			line-height: 22px;
+			width: 136px;
+			overflow: hidden;
+		}
+		.wrapper .info .price{
+			font-size: 14px;
+			font-style: italic;
+			color: #fa2a5d;
+			height: 35px;
+		}
+		.wrapper .line{
+			position: absolute;
+			right: 0;
+			width: 0;
+			bottom: 0;
+			height: 128px;
+			border: 1px dashed #caa; 
+		}
+		/*虚线是相对了父标签a而言的，所以会在最右边出现虚线*/
+
+		.wrapper .mask{
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 128px;
+			width: 156px;
+			opacity: 0;
+			background:#000; 
+		}
+		.wrapper li.big, li.big a{
+			width: 314px;
+		}
+		.wrapper li.big img{
+			width: 195px;
+			height: 120px;
+			right: 0;
+			bottom: 0;
+
+		}
+		/*展开列表，并放大图片和字体，但是没有改变遮罩层的宽度*/
+		.wrapper li.big .info{
+			width: 314px;
+		}
+		.wrapper li.big h3{
+			font-size: 18px;
+		}
+		.wrapper li.big p{
+			font-size: 14px;
+			width: 166px;
+		} 
+		.wrapper li.big p.price{
+			font-size: 16px;
+			padding-top: 7px;
+		}
+		.wrapper:hover .mask{
+			opacity: 0.15;
+		}
+		.wrapper li.big a:hover .mask{
+			opacity: 0;
+			/*覆盖掉遮罩层的透明度*/
+		}
+		.wrapper ul *{
+			transition: all linear 0.1s;
+		}
+    </style>
+    <script type="text/javascript">
+    // window.onload = function() {
+    	function bind(el, eventType, callback) {
+    		if(typeof el.addEventListener === 'function'){
+    			el.addEventListener(eventType, callback, false);
+    		}//判断为标准浏览器,使用addEventListener接口
+    		else if(typeof el.attachEvent === 'function'){
+    			el.attachEvent('on' + eventType, callback);
+    		}//判断为非标准浏览器--IE浏览器
+    	}
+    	function mouseoverHandler(e) {
+    		var target = e.target||e.srcElement;
+    		// target的意思是触发当前事件的源对象。srcElement是IE下的属性，target是Firefox下的属性；Chrome浏览器同时有这两个属性
+    		var outer = document.getElementById("subject");
+   		 	var	list = outer.getElementsByTagName('li');
+   		 	for(var i=0,len=list.length;i<len;i++) {
+   		 		list[i].className = '';
+   		 		// list[i].className = list[i].className.replace('big', '')
+	   		}
+	   		while(target.tagName !='LI' && target.tagName !='BODY'){
+	   			target = target.parentNode;
+	   		}
+	   		//target.tagName获取的tagName全是大写
+	   		target.className = 'big';
+    	}
+   		function initList(){
+   		 	var outer = document.getElementById("subject");
+   		 	var list = outer.getElementsByTagName('li');
+   		 	console.log(list)
+   		 	for(var i=0,len=list.length;i<len;i++) {
+   		 		bind(list[i], 'mouseover', mouseoverHandler);
+   		 		// mouseoverHandler为回调函数
+   		 	}
+   		 }
+   		// initList();	
+   	// }
+   	window.onload = initList;
+    </script>
+</head>
+
+<body>
+	<div id="subject" class="wrapper">
+		<ul>
+			<li>
+				<a href="#link1">
+					<img src="http://gtms01.alicdn.com/tps/i1/T1Lvt3Fv4kXXbA5QAK-195-120.jpg_Q90.jpg">
+					<div class="info">
+						<h3 style="color:#f62368">据美妆</h3>
+						<p>据美妆1/2周年庆</p>
+						<p class="price"><strong>1</strong><i>折起</i></p>
+					</div>
+					<s class="line"></s>
+					<i class="mask"></i>
+				</a>
+			</li>
+			<li>
+				<a href="#link2">
+					<img src="http://gtms01.alicdn.com/tps/i1/T1qxGLFsVbXXbA5QAK-195-120.jpg_Q90.jpg">
+					<div class="info">
+						<h3 style="color:#ff578a">Baby购</h3>
+               			<p>宝宝该换装了，新品抢购</p>
+                		<p class="price"><strong>2.5</strong><i>折起</i></p>
+					</div>
+					<s class="line"></s>
+					<i class="mask"></i>
+				</a>
+			</li>
+			<li>
+				<a href="#link3">
+					<img src="http://gtms02.alicdn.com/tps/i2/T1KOSNFxXaXXbA5QAK-195-120.jpg_Q90.jpg">
+	                <div class="info">
+		                <h3 style="color:#6d3fa7">时装团</h3>
+		                <p>时尚春装，清新小潮搭配</p>
+		                <p class="price"><strong>1</strong><i>折起</i></p>
+		            </div>
+					<s class="line"></s>
+					<i class="mask"></i>
+				</a>
+			</li>
+			<li>
+				<a href="#link4">
+					<img src="http://gtms04.alicdn.com/tps/i4/T1CCeIFrVbXXbA5QAK-195-120.jpg_Q90.jpg">
+	                <div class="info">
+		                <h3 style="color:#d61939">TV购</h3>
+		                <p>补血养颜 就这么简单</p>
+		                <p class="price"><strong>2.6</strong><i>折起</i></p>
+					<s class="line"></s>
+					<i class="mask"></i>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="#link5">
+					<img src="http://gtms01.alicdn.com/tps/i1/T1jmKJFyJbXXbA5QAK-195-120.jpg_Q90.jpg">
+	                <div class="info">
+		                <h3 style="color:#6f9400">聚新鲜</h3>
+		                <p>最纯正的泰国香米</p>
+		                <p class="price"><strong>5</strong><i>折起</i></p>
+		                </div>
+					<i class="mask"></i>
+				</a>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
