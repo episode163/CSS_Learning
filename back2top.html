@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript回到顶部效果</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css">
+		.box{
+			width: 1190px;
+			/*添加了宽度以后。在设置margin：0 auto 使图片居中才会生效，并有滚动条*/
+			margin: 0 auto;
+		}
+		#btn{
+			position: fixed;
+			width: 40px;
+			height: 40px;
+			left: 50%;
+			bottom: 30px;
+			background: url(http://img.mukewang.com/535e0dc100010e9c00400080.jpg) no-repeat 0 0;
+			margin-left:610px;
+			border: 1px solid #000;
+			display: none;
+		}
+		/*如果不设置bottom:30px的话，就会看不到图片*/
+		#btn:hover{
+			background: url(http://img.mukewang.com/535e0dc100010e9c00400080.jpg) no-repeat 0 -40px;
+		}
+	</style>
+	<script type="text/javascript">
+	   //页面加载完毕以后触发
+		window.onload = function (argument) {
+			// body...
+			var obtn = document.getElementById('btn');
+			var timer = null;
+			var isTop = true;
+			//获得可视区的高度
+			var clientHeight = document.documentElement.clientHeight;
+
+			//滚动条滚动时触发
+			window.onscroll = function () {
+				var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+				//是否显示回到顶部按钮，在第一屏不显示
+				if(osTop > clientHeight) {
+					obtn.style.display = 'block';
+				} else {
+					obtn.style.display = 'none';
+				}
+				//是否清除定时器
+				if(!isTop){
+					clearInterval(timer);
+				}
+				isTop = false;
+			}
+
+			obtn.onclick = function() {
+				// alert(clientHeight);643
+				timer = setInterval( function () {
+				//获取滚动条距离顶部的高度
+				var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+				var speed = Math.floor(-osTop / 5);
+                isTop = true;
+                // 设置为true就会使得回到顶部生效，否则一直触发滚动条事件
+				// document.documentElement.scrollTop = document.body.scrollTop -= 100;
+				//每次点击会向上移动100	
+
+				document.documentElement.scrollTop = document.body.scrollTop = osTop +speed;
+				//实现距离的递减，速度由快变慢，而不是固定不变的
+				console.log(osTop+speed)//发现最后的而数字是4而不是0 所以设置speed为负数
+				if(osTop == 0){
+					clearInterval(timer);
+				}
+			}, 100);
+				
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="box">
+		<img src="images/tb_bg.jpg" />
+	</div>
+	<a href="javascript:;" id="btn" tilte="回到顶部"></a>
+</body>
+</html>
