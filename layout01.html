@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>三行自适应布局</title>
+	<style type="text/css">
+		.head{
+			position: absolute;
+			height: 100px;
+			top:0;
+			left:0;
+			width:100%;
+			background-color: #ccc;
+		}
+		.body{
+			top:100px;
+			position: absolute;
+			overflow: auto;
+			bottom: 100px;
+			left:0;
+			right:0;
+		}
+		/*通过设置top&bottom来确定高度，left&right来确定宽度*/
+		.content{
+			height: 2000px;
+		}
+		.foot{
+			height: 100px;
+			bottom:0;
+			left:0;
+			width:100%;
+			position: absolute;
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	<div class="head">head</div>
+	<div class="body">
+		<div class="content">content area</div>
+	</div>
+	<div class="foot">foot</div>
+</body>
+</html>
